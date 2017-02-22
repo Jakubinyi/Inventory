@@ -1,28 +1,37 @@
 package inv;
 
+import java.util.ArrayList;
+
 public class StoreManager {
-	public void addStoreManager(storeCapable storage) 
-	{
+	
+	private StoreCapable storage;
+	
+	public void addStorage(StoreCapable storage) {
+		this.storage = storage;
+	}
+	
+	public void addCDProduct(String name, int price, int tracks) {
+		storage.storeCDProduct(name, price, tracks);
 		
 	}
 	
-	public void addCDProduct(String name, int price, int tracks) 
-	{
-		
+	public void addBookProduct(String name, int price, int size) {
+		storage.storeBookProduct(name, price, size);
 	}
 	
-	public void addBookProduct(String name, int price, int size) 
-	{
-		
+	public String listProducts() {
+		ArrayList<Product> listToPrint = ((Store) storage).loadProducts();
+		for(Product product : listToPrint) {
+			System.out.println(product.getName() + " - " + product.getPrice());
+		}
+		return "\nProduct loaded \n";
 	}
 	
-	public String listProducts() 
-	{
-		return null
-	}
-	
-	public int getTotalProductPrice() 
-	{
-		return null
+	public int getTotalProductPrice() {
+		int totalPrice = 0;
+		for(Product product : storage.getAllProduct()){
+			totalPrice += product.getPrice();
+		}
+		return totalPrice;
 	}
 }
